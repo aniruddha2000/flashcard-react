@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 
 class CardEditor extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      front: "",
+      back: "",
+    }
+  }
 
   render() {
-
     const rows = this.props.cards.map((card, i) => {
       return(
         <tr key={i}>
@@ -13,6 +19,7 @@ class CardEditor extends React.Component {
         </tr>
       )
     })
+
     return (
       <div>
         <h2>Card editor</h2>
@@ -28,10 +35,20 @@ class CardEditor extends React.Component {
             {rows}
           </tbody>
         </table>
+        <br/>
+        <input onChange={this.handleChange} type="text" name="front" placeholder="Front of card" value={this.state.front}/>
+        <input onChange={this.handleChange} type="text" name="back" placeholder="Back of card" value={this.state.back}/>
+        <button>Add Card</button>
         <hr />
         <button onClick={this.props.switchMode}>Go to viewer</button>
       </div>
     )
+  }
+
+  handleChange = (event) =>{
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 }
 
