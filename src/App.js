@@ -38,7 +38,7 @@ class CardEditor extends React.Component {
         <br/>
         <input onChange={this.handleChange} type="text" name="front" placeholder="Front of card" value={this.state.front}/>
         <input onChange={this.handleChange} type="text" name="back" placeholder="Back of card" value={this.state.back}/>
-        <button>Add Card</button>
+        <button onClick={this.addCard}>Add Card</button>
         <hr />
         <button onClick={this.props.switchMode}>Go to viewer</button>
       </div>
@@ -48,6 +48,14 @@ class CardEditor extends React.Component {
   handleChange = (event) =>{
     this.setState({
       [event.target.name]: event.target.value
+    })
+  }
+
+  addCard = () => {
+    this.props.addCard(this.state.front, this.state.back)
+    this.setState({
+      front: "",
+      back: ""
     })
   }
 }
@@ -82,6 +90,7 @@ class App extends Component {
         <CardEditor
           cards={this.state.cards}
           switchMode={this.switchMode}
+          addCard={this.addCard}
         />
       )
     } else {
@@ -97,6 +106,12 @@ class App extends Component {
   switchMode = () => {
     this.setState(state => ({
       editor: !state.editor
+    }))
+  }
+
+  addCard = (front, back) => {
+    this.setState(state => ({
+      cards: [...state.cards, { front, back }]
     }))
   }
 }
