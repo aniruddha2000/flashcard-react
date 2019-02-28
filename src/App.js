@@ -15,7 +15,7 @@ class CardEditor extends React.Component {
         <tr key={i}>
           <td>{card.front}</td>
           <td>{card.back}</td>
-          <td><button>Delete</button></td>
+          <td><button data-index={i} onClick={this.deleteCard}>Delete</button></td>
         </tr>
       )
     })
@@ -60,6 +60,11 @@ class CardEditor extends React.Component {
       })
     }
   }
+
+  deleteCard = (event) => {
+    this.props.deleteCard(event.target.dataset.index)
+  }
+
 }
 
 class CardViewer extends React.Component {
@@ -93,6 +98,7 @@ class App extends Component {
           cards={this.state.cards}
           switchMode={this.switchMode}
           addCard={this.addCard}
+          deleteCard={this.deleteCard}
         />
       )
     } else {
@@ -115,6 +121,14 @@ class App extends Component {
     this.setState(state => ({
       cards: [...state.cards, { front, back }]
     }))
+  }
+
+  deleteCard = (index) => {
+    this.setState(state => {
+      const cards = [...state.cards]
+      cards.splice(index, 1)
+      return { cards: cards }
+    })
   }
 }
 
