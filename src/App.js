@@ -69,9 +69,28 @@ class CardEditor extends React.Component {
 
 class CardViewer extends React.Component {
   render() {
+    const rows = this.props.cards.map((card, i) => {
+      return (
+        <tr key={i}>
+          <td>{card.front}</td>
+          <td>{card.back}</td>
+        </tr>
+      )
+    })
     return (
       <div>
         <h2>Card viewer</h2>
+        <table>
+          <thead>
+            <tr>
+              <td>Front</td>
+              <td>Back</td>
+            </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
         <hr />
         <button onClick={this.props.switchMode}>Go to editor</button>
       </div>
