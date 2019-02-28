@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class CardEditor extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       front: "",
@@ -11,7 +11,7 @@ class CardEditor extends React.Component {
 
   render() {
     const rows = this.props.cards.map((card, i) => {
-      return(
+      return (
         <tr key={i}>
           <td>{card.front}</td>
           <td>{card.back}</td>
@@ -35,9 +35,9 @@ class CardEditor extends React.Component {
             {rows}
           </tbody>
         </table>
-        <br/>
-        <input onChange={this.handleChange} type="text" name="front" placeholder="Front of card" value={this.state.front}/>
-        <input onChange={this.handleChange} type="text" name="back" placeholder="Back of card" value={this.state.back}/>
+        <br />
+        <input onChange={this.handleChange} type="text" name="front" placeholder="Front of card" value={this.state.front} />
+        <input onChange={this.handleChange} type="text" name="back" placeholder="Back of card" value={this.state.back} />
         <button onClick={this.addCard}>Add Card</button>
         <hr />
         <button onClick={this.props.switchMode}>Go to viewer</button>
@@ -45,18 +45,20 @@ class CardEditor extends React.Component {
     )
   }
 
-  handleChange = (event) =>{
+  handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
   addCard = () => {
-    this.props.addCard(this.state.front, this.state.back)
-    this.setState({
-      front: "",
-      back: ""
-    })
+    if ((this.state.front && this.state.back) !== "") {
+      this.props.addCard(this.state.front, this.state.back)
+      this.setState({
+        front: "",
+        back: ""
+      })
+    }
   }
 }
 
@@ -78,8 +80,8 @@ class App extends Component {
     super(props)
     this.state = {
       editor: true,
-      cards: [{front: 'test front', back: 'test back'},
-              {front: 'test 2 front', back: 'test 2 back'}],
+      cards: [{ front: 'test front', back: 'test back' },
+      { front: 'test 2 front', back: 'test 2 back' }],
 
     }
   }
